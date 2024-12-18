@@ -10,5 +10,6 @@
 - XiPivotを導入してください。
 - このページの Code -> Download ZIP でDATファイルをダウンロードしてください。
 - ダウンロードしたファイルを展開し、XiPivotのDATフォルダに `Windower4\addons\XiPivot\data\DATs\LycorisXI\ROM\`となるように配置してください。
-- XiPivotの設定ファイル `Windower4\addons\XiPivot\data\settings.xml`の`overlays`に`LycorisXI`を書き加えるか、ゲーム内から `//pivot a LycorisXI`を実行後、クライアントを再起動することで適用できます。
-- 同一キャラ名で複数サーバで遊んでいる方は上記の適用方法だとほかのサーバでも適用されてしまうことになるので、適当に工夫してください。
+- 以下のいずれかの方法でXiPivotのオーバレイに追加したDATを加えます。
+  - XiPivotの設定ファイル `Windower4\addons\XiPivot\data\settings.xml`の`overlays`に`LycorisXI`を書き加える（全サーバ&キャラに適用されてしまいますので注意）
+  - ゲーム内でログイン直後に`//pivot a LycorisXI`を実行（ゲーム内でメニューを開く=標準のDATが読み込まれてしまう前に実行する必要があります）
