@@ -1,4 +1,4 @@
-name: Build Custom DAT release
+name: Release Custom DAT and Update Discord Message
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  build-release:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +28,21 @@ jobs:
             LycorisXI-CustomDAT.zip \
             --title "${GITHUB_REF_NAME}" \
             --notes "Custom DAT release ${GITHUB_REF_NAME}"
+
+      - name: Build Discord payload
+        run: |
+          RELEASE_JST=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S JST')
+          RELEASE_URL="https://github.com/${GITHUB_REPOSITORY}/releases/tag/${GITHUB_REF_NAME}"
+
+          cat > payload.json <<EOF
+          {
+            "content": "## カスタムDAT\n最新リリース日: ${RELEASE_JST}\nバージョン: ${GITHUB_REF_NAME}\nダウンロード: ${RELEASE_URL}"
+          }
+          EOF
+
+      - name: Edit Discord message
+        run: |
+          curl -X PATCH \
+            -H "Content-Type: application/json" \
+            -d @payload.json \
+            "${{ secrets.DISCORD_WEBHOOK_URL }}/messages/${{ secrets.DISCORD_MESSAGE_ID }}"
