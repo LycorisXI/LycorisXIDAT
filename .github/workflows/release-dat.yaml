@@ -1,0 +1,30 @@
+name: Build Custom DAT release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Custom DAT zip
+        run: |
+          zip -r LycorisXI-CustomDAT.zip ROM
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            LycorisXI-CustomDAT.zip \
+            --title "${GITHUB_REF_NAME}" \
+            --notes "Custom DAT release ${GITHUB_REF_NAME}"
